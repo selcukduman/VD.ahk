@@ -16,6 +16,23 @@ Process, Priority,, H
 SetWinDelay -1
 SetControlDelay -1
 
+desktopnum := VD.getCurrentDesktopNum()
+if (FileExist(A_ScriptDir . "\icons\" . desktopnum . ".ico")) {
+        TraySetIcon(A_ScriptDir . "/icons/" . desktopnum . ".ico")
+    } else {
+        TraySetIcon(A_ScriptDir . "/icons/+.ico")
+    }
+
+VD.RegisterDesktopNotifications()
+VD.DefineProp("CurrentVirtualDesktopChanged", {Call:CurrentVirtualDesktopChanged})
+CurrentVirtualDesktopChanged(desktopNum_Old, desktopNum_New) {
+    if (FileExist(A_ScriptDir . "\icons\" . desktopNum_New . ".ico")) {
+        TraySetIcon(A_ScriptDir . "/icons/" . desktopNum_New . ".ico")
+    } else {
+        TraySetIcon(A_ScriptDir . "/icons/+.ico")
+    }
+}
+
 ;START of gui stuff
 Gui,Font, s12, Segoe UI
 explanation=
